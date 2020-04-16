@@ -13,6 +13,8 @@
 		3F7B65F52447CC73003EC046 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F7B65F32447CC73003EC046 /* Main.storyboard */; };
 		3F7B65F72447CC76003EC046 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F7B65F62447CC76003EC046 /* Assets.xcassets */; };
 		3F7B65FA2447CC76003EC046 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F7B65F82447CC76003EC046 /* LaunchScreen.storyboard */; };
+		3F7B66032447D1F8003EC046 /* CovidWorldData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7B66022447D1F8003EC046 /* CovidWorldData.swift */; };
+		3F7B66062447EEF1003EC046 /* LocaleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7B66052447EEF1003EC046 /* LocaleHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		3F7B65F62447CC76003EC046 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3F7B65F92447CC76003EC046 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3F7B65FB2447CC76003EC046 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3F7B66022447D1F8003EC046 /* CovidWorldData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CovidWorldData.swift; sourceTree = "<group>"; };
+		3F7B66052447EEF1003EC046 /* LocaleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +60,8 @@
 		3F7B65EC2447CC73003EC046 /* COVID2020 */ = {
 			isa = PBXGroup;
 			children = (
+				3F7B66042447EECC003EC046 /* Helper */,
+				3F7B66012447D1DC003EC046 /* Model */,
 				3F7B65ED2447CC73003EC046 /* AppDelegate.swift */,
 				3F7B65EF2447CC73003EC046 /* SceneDelegate.swift */,
 				3F7B65F12447CC73003EC046 /* ViewController.swift */,
@@ -65,6 +71,22 @@
 				3F7B65FB2447CC76003EC046 /* Info.plist */,
 			);
 			path = COVID2020;
+			sourceTree = "<group>";
+		};
+		3F7B66012447D1DC003EC046 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3F7B66022447D1F8003EC046 /* CovidWorldData.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		3F7B66042447EECC003EC046 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				3F7B66052447EEF1003EC046 /* LocaleHelper.swift */,
+			);
+			path = Helper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -140,7 +162,9 @@
 			files = (
 				3F7B65F22447CC73003EC046 /* ViewController.swift in Sources */,
 				3F7B65EE2447CC73003EC046 /* AppDelegate.swift in Sources */,
+				3F7B66032447D1F8003EC046 /* CovidWorldData.swift in Sources */,
 				3F7B65F02447CC73003EC046 /* SceneDelegate.swift in Sources */,
+				3F7B66062447EEF1003EC046 /* LocaleHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
