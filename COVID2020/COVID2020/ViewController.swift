@@ -36,8 +36,6 @@ class ViewController: UIViewController {
         super.viewDidLoad()
     
         fetchWorldData()
-        
-        print(Locale.current)
     }
 
     //MARK:- API CALL
