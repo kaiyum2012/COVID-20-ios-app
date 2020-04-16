@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import Charts
 
 class ViewController: UIViewController {
     
@@ -32,6 +33,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var deathRate: UILabel!
     @IBOutlet weak var recoveryRate: UILabel!
     
+    @IBOutlet weak var worldDataMap: PieChartView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -43,6 +47,7 @@ class ViewController: UIViewController {
         let urlSession = URLSession(configuration: .default)
 
         if let url = getWorldDataURL(){
+    
             let dataTask = urlSession.dataTask(with: url) { (data, response, error) in
                 
                 if let e = error{
@@ -56,6 +61,7 @@ class ViewController: UIViewController {
                             DispatchQueue.main.async{
 //                                print(readableData.areas[0].areas.count)
                                 self.updateGlanceViewLabels()
+                                self.UpdateWorldChart()
                             }
                     }catch{
                         print("Not able to decode world data: \(error)")
@@ -111,7 +117,6 @@ class ViewController: UIViewController {
        }
     
     fileprivate func updateGlanceViewLabels() {
-        
         guard let data = covidWordData else {
             print("Data not yet fetched or available")
             return
@@ -129,9 +134,40 @@ class ViewController: UIViewController {
         }
         
         
-        setDeathRateLabel(GetFormatedNumber(for: NSNumber.init(value:getDeathRate()), displayType: NumberFormatter.Style.decimal))
+        setDeathRateLabel(GetFormatedNumber(for: NSNumber.init(value:getDeathRate()), displayType: NumberFormatter.Style.percent))
         
-        setRecoveryRateLabel(GetFormatedNumber(for: NSNumber.init(value:getRecoveryRate()), displayType: NumberFormatter.Style.decimal))
+        setRecoveryRateLabel(GetFormatedNumber(for: NSNumber.init(value:getRecoveryRate()), displayType: NumberFormatter.Style.percent))
+    }
+    
+    fileprivate func UpdateWorldChart(){
+        guard let data = covidWordData else {
+            print("Data not yet fetched or available")
+            return
+        }
+
+//
+//        var bars : [BarChartDataEntry] = []
+        var pieEntries : [PieChartDataEntry] = []
+     
+        for barNo in 1...50{
+//            let bar = BarChartDataEntry(x: Double(barNo),yValues: [
+//                Double(data.areas[barNo].totalConfirmed!),
+//                Double(data.areas[barNo].totalRecovered!),
+//                Double(data.areas[barNo].totalDeaths!)])
+//            datasets.append(BarChartDataSet(entries: [bar],label: data.areas[barNo].displayName))
+            
+//            datasets.append(BarChartDataSet(entries: [bar],label: data.areas[barNo].displayName))
+            
+            let pie = PieChartDataEntry(value: Double(data.areas[barNo].totalConfirmed!), label: data.areas[barNo].displayName)
+            
+            
+            pieEntries.append(pie)
+        }
+       
+//        worldDataMap.data = BarChartData(dataSets: datasets)
+        worldDataMap.data = PieChartData(dataSet: PieChartDataSet(entries: pieEntries))
+       
+        
     }
     
     //MARK:- Api URL(s)
