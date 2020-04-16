@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 import Charts
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, ChartViewDelegate{
     
     var currentLocation : CLLocationCoordinate2D!
       
@@ -18,12 +18,15 @@ class ViewController: UIViewController {
     var extraParam = ""
 
     let PERC_UNIT = "%"
+    let TOP_5_COUNTRY : Int = 5
     
     enum EndPoints : String {
       case WordData = "data"
     }
     
     var covidWordData : CovidWordData!
+    
+    var sortedCovidWordDataByCountries : [CovidWordData]!
     
    
     @IBOutlet weak var totalCases: UILabel!
@@ -33,8 +36,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var deathRate: UILabel!
     @IBOutlet weak var recoveryRate: UILabel!
     
-    @IBOutlet weak var worldDataMap: PieChartView!
+    @IBOutlet weak var worldDataMap: BarChartView!
     
+    @IBOutlet weak var nearCountryDataMap: BarChartView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,10 +62,12 @@ class ViewController: UIViewController {
                     do{
                         let readableData = try JSONDecoder().decode(CovidWordData.self, from: data)
                         self.covidWordData = readableData
-                            DispatchQueue.main.async{
-//                                print(readableData.areas[0].areas.count)
-                                self.updateGlanceViewLabels()
-                                self.UpdateWorldChart()
+                        DispatchQueue.main.async{
+//                        Sort data in desc
+                            self.sortedCovidWordDataByCountries = self.covidWordData.areas.sorted()
+                            self.updateGlanceViewLabels()
+                            self.UpdateWorldChart()
+                                
                             }
                     }catch{
                         print("Not able to decode world data: \(error)")
@@ -138,37 +144,84 @@ class ViewController: UIViewController {
         
         setRecoveryRateLabel(GetFormatedNumber(for: NSNumber.init(value:getRecoveryRate()), displayType: NumberFormatter.Style.percent))
     }
-    
+//    MARK:- MAP methods
     fileprivate func UpdateWorldChart(){
-        guard let data = covidWordData else {
+        guard let data = getTopFiveCountryData() else {
             print("Data not yet fetched or available")
             return
         }
-
-//
-//        var bars : [BarChartDataEntry] = []
-        var pieEntries : [PieChartDataEntry] = []
-     
-        for barNo in 1...50{
-//            let bar = BarChartDataEntry(x: Double(barNo),yValues: [
-//                Double(data.areas[barNo].totalConfirmed!),
-//                Double(data.areas[barNo].totalRecovered!),
-//                Double(data.areas[barNo].totalDeaths!)])
-//            datasets.append(BarChartDataSet(entries: [bar],label: data.areas[barNo].displayName))
-            
-//            datasets.append(BarChartDataSet(entries: [bar],label: data.areas[barNo].displayName))
-            
-            let pie = PieChartDataEntry(value: Double(data.areas[barNo].totalConfirmed!), label: data.areas[barNo].displayName)
-            
-            
-            pieEntries.append(pie)
-        }
-       
-//        worldDataMap.data = BarChartData(dataSets: datasets)
-        worldDataMap.data = PieChartData(dataSet: PieChartDataSet(entries: pieEntries))
-       
         
+        let colors = [
+            UIColor.systemYellow,
+            UIColor.systemGreen,
+            UIColor.systemRed
+        ]
+        
+        let legends = ["Cases" , "Recovered" , "Death"]
+
+        var datasets : [BarChartDataSet] = []
+        var countries : [String] = []
+     
+        for barNo in 0..<TOP_5_COUNTRY{
+            let barForTotalCases = BarChartDataEntry(x: Double(barNo),y: Double(data[barNo].totalConfirmed!))
+            let barForTotalRecovered = BarChartDataEntry(x: Double(barNo),y:Double(data[barNo].totalRecovered!))
+            let barForTotalDeaths = BarChartDataEntry(x: Double(barNo),y:Double(data[barNo].totalDeaths!))
+            
+            let dataset1 = BarChartDataSet(entries: [barForTotalCases,barForTotalRecovered,barForTotalDeaths])
+            countries.append(data[barNo].displayName)
+            
+            dataset1.valueColors = [UIColor.black]
+            dataset1.colors = colors
+            datasets.append(dataset1)
+            
+        }
+        
+        let chartData = BarChartData(dataSets: datasets)
+        worldDataMap.delegate = self
+        worldDataMap.drawValueAboveBarEnabled = false
+        worldDataMap.drawBarShadowEnabled = false
+        worldDataMap.fitBars = true
+        
+        let xAxis = worldDataMap.xAxis
+        xAxis.labelPosition = .bottom
+        xAxis.labelCount = TOP_5_COUNTRY
+        xAxis.granularity = 1
+        xAxis.valueFormatter = CountryValueFormatter(chart: worldDataMap, targetCountries: countries)
+        xAxis.labelTextColor = UIColor.black
+      
+        let rightAxis = worldDataMap.rightAxis
+        rightAxis.enabled = false
+        
+        let leftAxis = worldDataMap.leftAxis
+
+        leftAxis.valueFormatter = DecimalNumberFormatter(chart: worldDataMap)
+        
+        let legend = worldDataMap.legend
+        
+        var legendsEntries: [LegendEntry] = []
+        
+        for i in 0..<legends.count {
+            legendsEntries.append(LegendEntry(label: legends[i], form: legend.form, formSize: legend.formSize, formLineWidth: legend.formLineWidth, formLineDashPhase: legend.formLineDashPhase, formLineDashLengths: legend.formLineDashLengths, formColor: colors[i]))
+        }
+        
+        legend.setCustom(entries: legendsEntries)
+        
+        worldDataMap.pinchZoomEnabled = true
+        worldDataMap.data = chartData
     }
+    
+    
+    //MARK:- DATAstore Methods
+    
+    func getTopFiveCountryData() -> [CovidWordData]?{
+        var topFiveCountries : [CovidWordData] = []
+        
+        for i in 0..<5{
+            topFiveCountries.append(sortedCovidWordDataByCountries[i])
+        }
+        return topFiveCountries
+    }
+    
     
     //MARK:- Api URL(s)
     private func getWorldDataURL() -> URL! {

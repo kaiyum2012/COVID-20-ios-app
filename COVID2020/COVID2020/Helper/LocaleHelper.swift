@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Charts
 
 
 func GetFormatedNumber(for number : NSNumber, displayType : NumberFormatter.Style ) -> String{
@@ -18,6 +19,4 @@ func GetFormatedNumber(for number : NSNumber, displayType : NumberFormatter.Styl
     
     return numberFormater.string(from: number)!
 }
-
-
 

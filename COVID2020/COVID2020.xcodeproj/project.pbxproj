@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -16,6 +16,8 @@
 		3F7B65FA2447CC76003EC046 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F7B65F82447CC76003EC046 /* LaunchScreen.storyboard */; };
 		3F7B66032447D1F8003EC046 /* CovidWorldData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7B66022447D1F8003EC046 /* CovidWorldData.swift */; };
 		3F7B66062447EEF1003EC046 /* LocaleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7B66052447EEF1003EC046 /* LocaleHelper.swift */; };
+		3FFF196E2448E1FC00A7EB07 /* CountryValueFormater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFF196D2448E1FC00A7EB07 /* CountryValueFormater.swift */; };
+		3FFF19702448E64C00A7EB07 /* DecimalNumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFF196F2448E64C00A7EB07 /* DecimalNumberFormatter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +33,8 @@
 		3F7B65FB2447CC76003EC046 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3F7B66022447D1F8003EC046 /* CovidWorldData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CovidWorldData.swift; sourceTree = "<group>"; };
 		3F7B66052447EEF1003EC046 /* LocaleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleHelper.swift; sourceTree = "<group>"; };
+		3FFF196D2448E1FC00A7EB07 /* CountryValueFormater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryValueFormater.swift; sourceTree = "<group>"; };
+		3FFF196F2448E64C00A7EB07 /* DecimalNumberFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimalNumberFormatter.swift; sourceTree = "<group>"; };
 		54E4A5928F0EFF63ACE6E37B /* Pods_COVID2020.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_COVID2020.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -92,6 +96,8 @@
 			isa = PBXGroup;
 			children = (
 				3F7B66052447EEF1003EC046 /* LocaleHelper.swift */,
+				3FFF196D2448E1FC00A7EB07 /* CountryValueFormater.swift */,
+				3FFF196F2448E64C00A7EB07 /* DecimalNumberFormatter.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -110,7 +116,6 @@
 				1645D07E73330CEEB378F2EA /* Pods-COVID2020.debug.xcconfig */,
 				0FF1B2A9D3D91C086699066B /* Pods-COVID2020.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -233,6 +238,8 @@
 				3F7B65EE2447CC73003EC046 /* AppDelegate.swift in Sources */,
 				3F7B66032447D1F8003EC046 /* CovidWorldData.swift in Sources */,
 				3F7B65F02447CC73003EC046 /* SceneDelegate.swift in Sources */,
+				3FFF196E2448E1FC00A7EB07 /* CountryValueFormater.swift in Sources */,
+				3FFF19702448E64C00A7EB07 /* DecimalNumberFormatter.swift in Sources */,
 				3F7B66062447EEF1003EC046 /* LocaleHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -12,14 +12,14 @@
             <objects>
                 <viewController id="6tE-VT-ImG" customClass="ViewController" customModule="COVID2020" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7qe-6x-5Ha">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="916"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="1200"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SEc-Eq-clA">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="916"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="1200"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kP7-vR-hkR" userLabel="content">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="916"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1200"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="9ib-cg-Lel" userLabel="quick glance">
                                                 <rect key="frame" x="0.0" y="48" width="414" height="100"/>
@@ -28,17 +28,17 @@
                                                         <rect key="frame" x="0.0" y="25" width="138" height="50"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="WoM-J4-TOL">
-                                                                <rect key="frame" x="-199" y="4.5" width="536" height="41"/>
+                                                                <rect key="frame" x="-218" y="4.5" width="574" height="41"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fHB-Lh-PlU" userLabel="value">
-                                                                        <rect key="frame" x="260.5" y="0.0" width="14.5" height="23"/>
+                                                                        <rect key="frame" x="279.5" y="0.0" width="14.5" height="23"/>
                                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
-                                                                        <color key="textColor" red="0.21610206370000001" green="0.41679006810000002" blue="0.68238383530000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                        <color key="textColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total Cases" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YHi-2q-wwZ">
-                                                                        <rect key="frame" x="223.5" y="23" width="89" height="18"/>
+                                                                        <rect key="frame" x="242.5" y="23" width="89" height="18"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
@@ -180,38 +180,47 @@
                                                     </view>
                                                 </subviews>
                                             </stackView>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8GF-Fg-TGz" customClass="PieChartView" customModule="Charts">
-                                                <rect key="frame" x="20" y="262" width="374" height="400"/>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="JmB-Uv-kvl" userLabel="maps">
+                                                <rect key="frame" x="0.0" y="262" width="414" height="832"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8GF-Fg-TGz" customClass="BarChartView" customModule="Charts">
+                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="400"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="400" id="egJ-v9-SeT"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ffv-dB-oez" userLabel="near country map" customClass="BarChartView" customModule="Charts">
+                                                        <rect key="frame" x="0.0" y="432" width="414" height="400"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="400" id="0Gg-Ce-wIP"/>
+                                                        </constraints>
+                                                    </view>
+                                                </subviews>
+                                                <color key="backgroundColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="400" id="egJ-v9-SeT"/>
+                                                    <constraint firstAttribute="trailing" secondItem="8GF-Fg-TGz" secondAttribute="trailing" id="Nba-ee-oYJ"/>
+                                                    <constraint firstItem="8GF-Fg-TGz" firstAttribute="leading" secondItem="JmB-Uv-kvl" secondAttribute="leading" id="bsQ-Pb-SoQ"/>
+                                                    <constraint firstItem="Ffv-dB-oez" firstAttribute="leading" secondItem="JmB-Uv-kvl" secondAttribute="leading" id="e1Z-o8-hfG"/>
+                                                    <constraint firstAttribute="trailing" secondItem="Ffv-dB-oez" secondAttribute="trailing" id="osc-gw-Lez"/>
                                                 </constraints>
-                                            </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="koI-ds-m5n" customClass="CombinedChartView" customModule="Charts">
-                                                <rect key="frame" x="20" y="262" width="374" height="400"/>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="400" id="1qK-EM-6My"/>
-                                                </constraints>
-                                            </view>
+                                            </stackView>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
-                                            <constraint firstItem="8GF-Fg-TGz" firstAttribute="top" secondItem="aZR-SB-djq" secondAttribute="bottom" constant="32" id="0zR-Ey-tou"/>
                                             <constraint firstItem="aZR-SB-djq" firstAttribute="top" secondItem="9ib-cg-Lel" secondAttribute="bottom" constant="32" id="2ik-cr-afj"/>
                                             <constraint firstAttribute="trailing" secondItem="aZR-SB-djq" secondAttribute="trailing" id="9kn-cR-X5N"/>
                                             <constraint firstItem="aZR-SB-djq" firstAttribute="leading" secondItem="kP7-vR-hkR" secondAttribute="leading" id="AGO-U1-S5A"/>
-                                            <constraint firstItem="8GF-Fg-TGz" firstAttribute="centerX" secondItem="kP7-vR-hkR" secondAttribute="centerX" id="AVK-Mc-VC1"/>
-                                            <constraint firstItem="koI-ds-m5n" firstAttribute="centerX" secondItem="8GF-Fg-TGz" secondAttribute="centerX" id="Avb-Gm-mzl"/>
                                             <constraint firstItem="9ib-cg-Lel" firstAttribute="centerX" secondItem="kP7-vR-hkR" secondAttribute="centerX" id="AyV-wf-Rs2"/>
                                             <constraint firstAttribute="trailing" secondItem="9ib-cg-Lel" secondAttribute="trailing" id="G2X-qY-27H"/>
                                             <constraint firstItem="9ib-cg-Lel" firstAttribute="leading" secondItem="kP7-vR-hkR" secondAttribute="leading" id="N5Z-pY-AAs"/>
-                                            <constraint firstItem="koI-ds-m5n" firstAttribute="width" secondItem="8GF-Fg-TGz" secondAttribute="width" id="Tm1-kc-euS"/>
-                                            <constraint firstAttribute="trailing" secondItem="8GF-Fg-TGz" secondAttribute="trailing" constant="20" id="aD6-x3-e0l"/>
+                                            <constraint firstItem="JmB-Uv-kvl" firstAttribute="centerX" secondItem="aZR-SB-djq" secondAttribute="centerX" id="YGh-EG-IEw"/>
+                                            <constraint firstItem="JmB-Uv-kvl" firstAttribute="top" secondItem="aZR-SB-djq" secondAttribute="bottom" constant="32" id="Zf1-ob-iiP"/>
                                             <constraint firstItem="9ib-cg-Lel" firstAttribute="top" secondItem="kP7-vR-hkR" secondAttribute="top" constant="48" id="bI9-d9-lMy"/>
+                                            <constraint firstItem="JmB-Uv-kvl" firstAttribute="leading" secondItem="kP7-vR-hkR" secondAttribute="leading" id="dQ0-UI-iTo"/>
+                                            <constraint firstAttribute="trailing" secondItem="JmB-Uv-kvl" secondAttribute="trailing" id="eI7-qd-yb3"/>
                                             <constraint firstItem="aZR-SB-djq" firstAttribute="centerX" secondItem="kP7-vR-hkR" secondAttribute="centerX" id="hyc-LJ-gtc"/>
-                                            <constraint firstItem="8GF-Fg-TGz" firstAttribute="leading" secondItem="kP7-vR-hkR" secondAttribute="leading" constant="20" id="rlp-cA-cNg"/>
-                                            <constraint firstItem="koI-ds-m5n" firstAttribute="bottom" secondItem="8GF-Fg-TGz" secondAttribute="bottom" id="xvY-t2-gwR"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -237,9 +246,10 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="OYf-5e-5fd"/>
                     </view>
-                    <size key="freeformSize" width="414" height="916"/>
+                    <size key="freeformSize" width="414" height="1200"/>
                     <connections>
                         <outlet property="deathRate" destination="LfS-Ok-Quo" id="U1j-10-vnM"/>
+                        <outlet property="nearCountryDataMap" destination="Ffv-dB-oez" id="cc7-JM-4Td"/>
                         <outlet property="recoveryRate" destination="p49-jJ-b51" id="cgf-9v-8BV"/>
                         <outlet property="totalCases" destination="fHB-Lh-PlU" id="5Ci-9c-aMf"/>
                         <outlet property="totalDeaths" destination="y0Y-yx-1bh" id="Qx2-fH-WXl"/>
