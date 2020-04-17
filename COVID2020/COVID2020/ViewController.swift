@@ -10,25 +10,30 @@ import UIKit
 import CoreLocation
 import Charts
 
-class ViewController: UIViewController, ChartViewDelegate{
-    
-    var currentLocation : CLLocationCoordinate2D!
-      
+class ViewController: UIViewController, ChartViewDelegate,CLLocationManagerDelegate{
+
     var apiBaseURL = "https://www.bing.com/covid/"
     var extraParam = ""
 
     let PERC_UNIT = "%"
     let TOP_5_COUNTRY : Int = 5
+    let PAGE_REFRESH_INTERVAL : Double = 600 // 10 Min
     
     enum EndPoints : String {
       case WordData = "data"
     }
     
     var covidWordData : CovidWordData!
-    
     var sortedCovidWordDataByCountries : [CovidWordData]!
+    var nearestCountryWorldData : CovidWordData!
     
-   
+    let locationManager = CLLocationManager()
+    var currentLocation : CLLocation!
+    let geocoder = CLGeocoder()
+    var currentCity : String!
+    var currentCountry : String!
+    
+    
     @IBOutlet weak var totalCases: UILabel!
     @IBOutlet weak var totalRecovered: UILabel!
     @IBOutlet weak var totalDeaths: UILabel!
@@ -38,14 +43,92 @@ class ViewController: UIViewController, ChartViewDelegate{
     
     @IBOutlet weak var worldDataMap: BarChartView!
     
+    @IBOutlet weak var currentCityView: UIView!
+    
+    @IBOutlet weak var currentCityLabel: UILabel!
+    @IBOutlet weak var nearbyCountry: UILabel!
+    
     @IBOutlet weak var nearCountryDataMap: BarChartView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        fetchWorldData()
+////       Reference:: https://medium.com/swiftcraft/how-to-perform-an-action-after-two-asynchronous-functions-finish-1d796faf5daf
+//        let asyncTaskGroup =  DispatchGroup()
+//        asyncTaskGroup.enter()
+//
+//        fetchWorldData()
+//        StartGettingLocation()
+//
+//        asyncTaskGroup.leave()
+//
+//        asyncTaskGroup.notify(queue: .main) {
+//            self.updateGlanceViewLabels()
+//            self.UpdateWorldChart()
+//            print(self.getNearestCountryData()!)
+//        }
+        
+        DispatchQueue.main.async {
+            self.fetchWorldData()
+            self.StartGettingLocation()
+            
+// Reference :: https://www.hackingwithswift.com/articles/117/the-ultimate-guide-to-timer
+            Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { (timer) in
+                if self.nearestCountryWorldData == nil {
+                    self.nearestCountryWorldData = self.getNearestCountryData()
+                    if let x = self.nearestCountryWorldData {
+                        print("Nearest Country --> \(x.displayName)")
+                        self.SetNearByCountryLabel("\(x.displayName)")
+//                         Load Nearest Country Map data
+                    }
+                }else{
+                    timer.invalidate()
+                }
+            }
+        }
     }
 
+//    MARK:- Location Functions
+    fileprivate func StartGettingLocation() {
+          locationManager.delegate = self
+          //Instruct GPS to start gathering data
+          locationManager.startUpdatingLocation()
+          //Additionally get permission from user to use GPS
+          locationManager.requestWhenInUseAuthorization()
+    }
+    
+    fileprivate func StopGettingLocation() {
+           locationManager.stopUpdatingLocation()
+    }
+
+    fileprivate func FindCurrentCountry() {
+// Reference :: https://stackoverflow.com/questions/44031257/find-city-name-and-country-from-latitude-and-longitude-in-swift
+        geocoder.reverseGeocodeLocation(currentLocation) { (placemarks, error) in
+            if error == nil, let placemark = placemarks, !placemark.isEmpty {
+                if let placemark = placemark.last{
+                    if let country = placemark.country{
+                        self.currentCountry = country
+                        print("Current Country --> \(country)")
+                    }
+                    
+                    if let city = placemark.locality {
+                        self.currentCity = city
+                        print("Current City --> \(city)")
+                        self.SetCurrentCityLabel(city)
+                    }
+                }
+            }
+        }
+    }
+//    TODO:: WHAT IF PERMISSION DENIED?
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let l =  locations.last {
+            currentLocation =  l
+            StopGettingLocation()
+            
+            FindCurrentCountry()
+        }
+    }
     //MARK:- API CALL
     func fetchWorldData() {
         let urlSession = URLSession(configuration: .default)
@@ -67,7 +150,6 @@ class ViewController: UIViewController, ChartViewDelegate{
                             self.sortedCovidWordDataByCountries = self.covidWordData.areas.sorted()
                             self.updateGlanceViewLabels()
                             self.UpdateWorldChart()
-                                
                             }
                     }catch{
                         print("Not able to decode world data: \(error)")
@@ -98,6 +180,17 @@ class ViewController: UIViewController, ChartViewDelegate{
     fileprivate func setRecoveryRateLabel(_ value: String) {
         recoveryRate.text = value + PERC_UNIT
     }
+    
+    fileprivate func SetNearByCountryLabel(_ value : String){
+        nearbyCountry.text?.append(value)
+    }
+    
+    fileprivate func SetCurrentCityLabel(_ value : String){
+        currentCityLabel.text = value
+        currentCityView.backgroundColor = UIColor.systemGreen
+        self.view.bringSubviewToFront(currentCityView)
+    }
+    
     
     func getDeathRate() -> Double {
         guard let data = covidWordData else {
@@ -144,7 +237,7 @@ class ViewController: UIViewController, ChartViewDelegate{
         
         setRecoveryRateLabel(GetFormatedNumber(for: NSNumber.init(value:getRecoveryRate()), displayType: NumberFormatter.Style.percent))
     }
-//    MARK:- MAP methods
+//    MARK:- MAP functions
     fileprivate func UpdateWorldChart(){
         guard let data = getTopFiveCountryData() else {
             print("Data not yet fetched or available")
@@ -211,7 +304,7 @@ class ViewController: UIViewController, ChartViewDelegate{
     }
     
     
-    //MARK:- DATAstore Methods
+    //MARK:-
     
     func getTopFiveCountryData() -> [CovidWordData]?{
         var topFiveCountries : [CovidWordData] = []
@@ -222,7 +315,39 @@ class ViewController: UIViewController, ChartViewDelegate{
         return topFiveCountries
     }
     
-    
+    func getNearestCountryData() -> CovidWordData?{
+        var data : CovidWordData!
+        var distance : Double?
+        
+        guard let location = currentLocation else {
+            print("Location not detected")
+            return nil
+        }
+        
+        guard let countires = covidWordData else {
+            print("covid data is not available")
+            return nil
+        }
+        
+        for country in countires.areas {
+            if let d = distance {
+                let dis = location.distance(from: CLLocation(latitude: country.lat!, longitude: country.long!))
+//                print(" Current: \(d) -----   dis: \(dis) -> country : \(country.displayName)")
+//                print("--> " + data.displayName.lowercased())
+                if(dis < d &&  country.displayName.lowercased() != currentCountry.lowercased()){
+                    data = country
+                    distance = dis
+//                    print("dis: \(dis) -> country : \(country.displayName) and current smallest distance \(d) " )
+//                    print("from data   " + data.displayName)
+                }
+            }else{
+                distance = location.distance(from: CLLocation(latitude: country.lat!, longitude: country.long!))
+                data = country
+            }
+        }
+        
+        return data
+    }
     //MARK:- Api URL(s)
     private func getWorldDataURL() -> URL! {
         return URL(string:getApiURL(endpoint: EndPoints.WordData))

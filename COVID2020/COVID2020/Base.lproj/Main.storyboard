@@ -15,14 +15,31 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="1066"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xYx-HO-AV4" userLabel="currentLocation">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="24"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u30-Vz-Vfw">
+                                        <rect key="frame" x="186.33333333333334" y="5" width="41.666666666666657" height="14"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="u30-Vz-Vfw" firstAttribute="centerX" secondItem="xYx-HO-AV4" secondAttribute="centerX" id="NSl-4U-JcY"/>
+                                    <constraint firstItem="u30-Vz-Vfw" firstAttribute="centerY" secondItem="xYx-HO-AV4" secondAttribute="centerY" id="OtR-zs-DXA"/>
+                                    <constraint firstItem="u30-Vz-Vfw" firstAttribute="top" secondItem="xYx-HO-AV4" secondAttribute="top" constant="5" id="sdy-bk-ApG"/>
+                                    <constraint firstAttribute="height" constant="24" id="zaX-BR-lig"/>
+                                </constraints>
+                            </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SEc-Eq-clA">
                                 <rect key="frame" x="0.0" y="-48" width="414" height="1114"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kP7-vR-hkR" userLabel="content">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1148"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1164"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="9ib-cg-Lel" userLabel="quick glance">
-                                                <rect key="frame" x="0.0" y="16" width="414" height="100"/>
+                                                <rect key="frame" x="0.0" y="32" width="414" height="100"/>
                                                 <subviews>
                                                     <view contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="gro-hJ-cAa">
                                                         <rect key="frame" x="0.0" y="25" width="138" height="50"/>
@@ -57,7 +74,7 @@
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="7v2-KN-99p">
-                                                                <rect key="frame" x="-16.333333333333329" y="-20.333333333333332" width="170.66666666666663" height="40.666666666666664"/>
+                                                                <rect key="frame" x="-16.333333333333329" y="-20.333333333333336" width="170.66666666666663" height="40.666666666666664"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="iws-Go-Her" userLabel="value">
                                                                         <rect key="frame" x="78" y="0.0" width="14.666666666666671" height="23"/>
@@ -87,7 +104,7 @@
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Cl4-HW-G2i">
-                                                                <rect key="frame" x="-0.66666666666668561" y="-20.333333333333332" width="139.33333333333334" height="40.666666666666664"/>
+                                                                <rect key="frame" x="-0.66666666666668561" y="-20.333333333333336" width="139.33333333333334" height="40.666666666666664"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="y0Y-yx-1bh" userLabel="value">
                                                                         <rect key="frame" x="62.333333333333336" y="0.0" width="14.666666666666664" height="23"/>
@@ -118,7 +135,7 @@
                                                 </constraints>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="aZR-SB-djq" userLabel="percentage">
-                                                <rect key="frame" x="0.0" y="148" width="414" height="50"/>
+                                                <rect key="frame" x="0.0" y="164" width="414" height="50"/>
                                                 <subviews>
                                                     <view contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="0YU-JM-c4K">
                                                         <rect key="frame" x="0.0" y="0.0" width="207" height="50"/>
@@ -134,7 +151,7 @@
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Death Rate" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ZJ-Oj-aaQ">
-                                                                        <rect key="frame" x="39" y="23" width="85" height="17.666666666666671"/>
+                                                                        <rect key="frame" x="39" y="22.999999999999986" width="85" height="17.666666666666671"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
@@ -163,7 +180,7 @@
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recovery Rate" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IkZ-FZ-fOf">
-                                                                        <rect key="frame" x="31.333333333333336" y="23" width="110.33333333333331" height="17.666666666666671"/>
+                                                                        <rect key="frame" x="31.333333333333336" y="22.999999999999986" width="110.33333333333331" height="17.666666666666671"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
@@ -181,7 +198,7 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="JmB-Uv-kvl" userLabel="maps">
-                                                <rect key="frame" x="0.0" y="230" width="414" height="832"/>
+                                                <rect key="frame" x="0.0" y="246" width="414" height="832"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8GF-Fg-TGz" customClass="BarChartView" customModule="Charts">
                                                         <rect key="frame" x="0.0" y="0.0" width="414" height="400"/>
@@ -228,7 +245,7 @@
                                                 </constraints>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Iaf-Vi-We6" userLabel="buttons">
-                                                <rect key="frame" x="0.0" y="1078" width="414" height="50"/>
+                                                <rect key="frame" x="0.0" y="1094" width="414" height="50"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wiu-UW-BwE" userLabel="infection">
                                                         <rect key="frame" x="0.0" y="0.0" width="207" height="50"/>
@@ -263,7 +280,7 @@
                                             <constraint firstItem="Iaf-Vi-We6" firstAttribute="leading" secondItem="kP7-vR-hkR" secondAttribute="leading" id="OMe-OY-V2c"/>
                                             <constraint firstItem="JmB-Uv-kvl" firstAttribute="centerX" secondItem="aZR-SB-djq" secondAttribute="centerX" id="YGh-EG-IEw"/>
                                             <constraint firstItem="JmB-Uv-kvl" firstAttribute="top" secondItem="aZR-SB-djq" secondAttribute="bottom" constant="32" id="Zf1-ob-iiP"/>
-                                            <constraint firstItem="9ib-cg-Lel" firstAttribute="top" secondItem="kP7-vR-hkR" secondAttribute="top" constant="16" id="bI9-d9-lMy"/>
+                                            <constraint firstItem="9ib-cg-Lel" firstAttribute="top" secondItem="kP7-vR-hkR" secondAttribute="top" constant="32" id="bI9-d9-lMy"/>
                                             <constraint firstItem="JmB-Uv-kvl" firstAttribute="leading" secondItem="kP7-vR-hkR" secondAttribute="leading" id="dQ0-UI-iTo"/>
                                             <constraint firstAttribute="trailing" secondItem="JmB-Uv-kvl" secondAttribute="trailing" id="eI7-qd-yb3"/>
                                             <constraint firstItem="aZR-SB-djq" firstAttribute="centerX" secondItem="kP7-vR-hkR" secondAttribute="centerX" id="hyc-LJ-gtc"/>
@@ -286,15 +303,22 @@
                         <constraints>
                             <constraint firstItem="OYf-5e-5fd" firstAttribute="top" secondItem="SEc-Eq-clA" secondAttribute="top" constant="48" id="71k-nW-RLb"/>
                             <constraint firstItem="OYf-5e-5fd" firstAttribute="trailing" secondItem="SEc-Eq-clA" secondAttribute="trailing" id="7HE-dG-S82"/>
+                            <constraint firstItem="xYx-HO-AV4" firstAttribute="centerX" secondItem="OYf-5e-5fd" secondAttribute="centerX" id="BIo-Ct-eBl"/>
                             <constraint firstItem="SEc-Eq-clA" firstAttribute="leading" secondItem="OYf-5e-5fd" secondAttribute="leading" id="Tak-0G-XeH"/>
+                            <constraint firstItem="OYf-5e-5fd" firstAttribute="trailing" secondItem="xYx-HO-AV4" secondAttribute="trailing" id="eZb-IS-FIc"/>
+                            <constraint firstItem="xYx-HO-AV4" firstAttribute="top" secondItem="OYf-5e-5fd" secondAttribute="top" id="elj-lC-YsH"/>
+                            <constraint firstItem="xYx-HO-AV4" firstAttribute="leading" secondItem="OYf-5e-5fd" secondAttribute="leading" id="mJl-4H-zOf"/>
                             <constraint firstAttribute="bottom" secondItem="SEc-Eq-clA" secondAttribute="bottom" id="shr-eg-12r"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="OYf-5e-5fd"/>
                     </view>
                     <size key="freeformSize" width="414" height="1066"/>
                     <connections>
+                        <outlet property="currentCityLabel" destination="u30-Vz-Vfw" id="U4d-EV-VQM"/>
+                        <outlet property="currentCityView" destination="xYx-HO-AV4" id="LRO-AK-EEK"/>
                         <outlet property="deathRate" destination="LfS-Ok-Quo" id="U1j-10-vnM"/>
                         <outlet property="nearCountryDataMap" destination="Ffv-dB-oez" id="cc7-JM-4Td"/>
+                        <outlet property="nearbyCountry" destination="QUj-P4-JdW" id="ZyU-va-SVz"/>
                         <outlet property="recoveryRate" destination="p49-jJ-b51" id="cgf-9v-8BV"/>
                         <outlet property="totalCases" destination="fHB-Lh-PlU" id="5Ci-9c-aMf"/>
                         <outlet property="totalDeaths" destination="y0Y-yx-1bh" id="Qx2-fH-WXl"/>
