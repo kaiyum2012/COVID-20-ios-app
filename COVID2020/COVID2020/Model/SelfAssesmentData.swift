@@ -44,6 +44,6 @@ let assesments : [SelfAssesment] = [
         "who lived with or otherwise had close prolonged contact (within 2 meters) with the person while they were infectious OR",
         "had direct contact with infectious bodily fluids of the person (e.g. was coughed or sneezed on) while not wearing recommended personal protective equipment"
     ],type : OptionType.MULTIPLE),
-    SelfAssesment(queNO: 4, question: "Travel includes passing through an airport.", options: [""],type : OptionType.TRUE_OR_FALSE),
+    SelfAssesment(queNO: 4, question: "Travel includes passing through an airport.", options: ["yes","No"],type : OptionType.TRUE_OR_FALSE),
     
 ]

@@ -10,7 +10,6 @@ import UIKit
 
 class AssesmentTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var questionLabel: UILabel!
     
     @IBOutlet weak var optionsStack: UIStackView!
     
@@ -25,48 +24,38 @@ class AssesmentTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    public func setQuestionLabel(_ value : String){
-        questionLabel.text = value;
-    }
-    
     public func setOptions(options data : SelfAssesment){
       
         for option in data.options {
             
-            let optionLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
-            optionLabel.text = option
-            optionLabel.textAlignment = .left
-            optionsStack.addSubview(optionLabel)
+//            let opt = Checkbox()
+            let opt = UILabel(frame: CGRect())
+
+            optionsStack.addSubview(opt)
+
+            opt.translatesAutoresizingMaskIntoConstraints = false
+
+            opt.leadingAnchor.constraint(equalTo: self.optionsStack.leadingAnchor).isActive=true
+            opt.trailingAnchor.constraint(equalTo: self.optionsStack.trailingAnchor).isActive = true
+
+            opt.leadingAnchor.constraint(lessThanOrEqualTo: self.optionsStack.leadingAnchor).isActive = true
+            opt.trailingAnchor.constraint(lessThanOrEqualTo: self.optionsStack.trailingAnchor).isActive = true
+
+            opt.lineBreakMode = .byWordWrapping
+            
+            
+//            opt.autoresizesSubviews = true
+//            opt.titleLabel!.text = option
+            opt.text = option
+            
+//            opt.imageView?.leadingAnchor.constraint(equalTo: self.optionsStack.leadingAnchor).isActive = true
+//
+//            opt.isSelected = false
+//
+      
             
         }
-//        TODO:: ADD to support Check box and radio
-        //        let o = CheckBox(type: .system)
-//        o.titleLabel!.text = data.options[0]
-//       optionsStack.addSubview(o)
-//       optionsStack.reloadInputViews()
-        
-        
-
-//        switch data.type {
-//        case OptionType.MULTIPLE:
-//            for option in data.options {
-//                let o = CheckBox(type: .system)
-//                o.titleLabel!.text = option
-//                optionsStack.addSubview(o)
-//                optionsStack.reloadInputViews()
-//            }
-//            break
-//        default:
-//            print("no option type")
-//            for option in data.options {
-//                let o = CheckBox(type: .system)
-//                o.titleLabel!.text = option
-//                optionsStack.addSubview(o)
-//            }
-//        }
-        
-        
-        
+//
     }
 
 }

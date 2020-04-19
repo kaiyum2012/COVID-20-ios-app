@@ -11,12 +11,20 @@ import WebKit
 
 class InfoViewController: UIViewController {
 
+    let infoUrl : String = "https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public"
+    
     @IBOutlet var webView: WKWebView!
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        webView.load(URLRequest(url: URL(string: "https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public")!))
+        loadInfoWebPage()
+    }
+    
+    private func  loadInfoWebPage(){
+        guard let url = URL(string: infoUrl) else{
+            print("unable to create url")
+            return
+        }
+        webView.load(URLRequest(url: url))
     }
 
 }

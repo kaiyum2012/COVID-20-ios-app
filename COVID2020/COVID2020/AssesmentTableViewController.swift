@@ -16,29 +16,48 @@ class AssesmentTableViewController: UITableViewController {
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-         self.navigationItem.rightBarButtonItem = self.editButtonItem
+//         self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return assesments.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return assesments.count
+        return assesments[section].options.count
     }
 
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let label = UILabel()
+        label.text = "(\(assesments[section].queNO))   \(assesments[section].question)"
+        
+        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 10
+        
+        label.backgroundColor = .systemIndigo
+        
+        return label
+    }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! AssesmentTableViewCell
+        let  cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! AssesmentTableViewCell
 
-        // Configure the cell...
-        cell.setQuestionLabel("(\(assesments[indexPath.row].queNO))   \(assesments[indexPath.row].question)")
-        cell.setOptions(options: assesments[indexPath.row])
-//        cell.optionsStack.addSubview(UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 200)))
+        let optionsStack = cell.optionsStack!
+        
+        let opt = optionsStack.viewWithTag(100) as! UILabel
+        
+        optionsStack.addSubview(opt)
+
+        opt.leadingAnchor.constraint(equalTo: optionsStack.leadingAnchor).isActive=true
+        opt.trailingAnchor.constraint(equalTo: optionsStack.trailingAnchor).isActive = true
+        opt.lineBreakMode = .byWordWrapping
+
+        opt.text = assesments[indexPath.section].options[indexPath.row]
+        
         return cell
     }
     
