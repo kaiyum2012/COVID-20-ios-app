@@ -23,9 +23,14 @@ class ViewController: UIViewController, ChartViewDelegate,CLLocationManagerDeleg
       case WordData = "data"
     }
     
+    enum NaVIdentifiers : String {
+        case ASSESMENT = "assesment"
+        case INFO = "info"
+    }
+    
     var covidWordData : CovidWordData!
     var sortedCovidWordDataByCountries : [CovidWordData]!
-    var nearestCountryWorldData : CovidWordData!
+    var nearestCountrydData : CovidWordData!
     
     let locationManager = CLLocationManager()
     var currentLocation : CLLocation!
@@ -48,7 +53,7 @@ class ViewController: UIViewController, ChartViewDelegate,CLLocationManagerDeleg
     @IBOutlet weak var currentCityLabel: UILabel!
     @IBOutlet weak var nearbyCountry: UILabel!
     
-    @IBOutlet weak var nearCountryDataMap: BarChartView!
+    @IBOutlet weak var nearCountryDataMap: PieChartView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,12 +79,13 @@ class ViewController: UIViewController, ChartViewDelegate,CLLocationManagerDeleg
             
 // Reference :: https://www.hackingwithswift.com/articles/117/the-ultimate-guide-to-timer
             Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { (timer) in
-                if self.nearestCountryWorldData == nil {
-                    self.nearestCountryWorldData = self.getNearestCountryData()
-                    if let x = self.nearestCountryWorldData {
+                if self.nearestCountrydData == nil {
+                    if let x = self.getNearestCountryData() {
+                        self.nearestCountrydData = x
                         print("Nearest Country --> \(x.displayName)")
                         self.SetNearByCountryLabel("\(x.displayName)")
 //                         Load Nearest Country Map data
+                        self.updateNearestCountryMap()
                     }
                 }else{
                     timer.invalidate()
@@ -149,7 +155,7 @@ class ViewController: UIViewController, ChartViewDelegate,CLLocationManagerDeleg
 //                        Sort data in desc
                             self.sortedCovidWordDataByCountries = self.covidWordData.areas.sorted()
                             self.updateGlanceViewLabels()
-                            self.UpdateWorldChart()
+                            self.updateWorldChart()
                             }
                     }catch{
                         print("Not able to decode world data: \(error)")
@@ -237,8 +243,16 @@ class ViewController: UIViewController, ChartViewDelegate,CLLocationManagerDeleg
         
         setRecoveryRateLabel(GetFormatedNumber(for: NSNumber.init(value:getRecoveryRate()), displayType: NumberFormatter.Style.percent))
     }
+    
+    func generateRandomColor() -> UIColor {
+      let hue : CGFloat = CGFloat(arc4random() % 256) / 256 // use 256 to get full range from 0.0 to 1.0
+      let saturation : CGFloat = CGFloat(arc4random() % 128) / 256 + 0.5 // from 0.5 to 1.0 to stay away from white
+      let brightness : CGFloat = CGFloat(arc4random() % 128) / 256 + 0.5 // from 0.5 to 1.0 to stay away from black
+            
+      return UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1)
+    }
 //    MARK:- MAP functions
-    fileprivate func UpdateWorldChart(){
+    fileprivate func updateWorldChart(){
         guard let data = getTopFiveCountryData() else {
             print("Data not yet fetched or available")
             return
@@ -265,6 +279,7 @@ class ViewController: UIViewController, ChartViewDelegate,CLLocationManagerDeleg
             
             dataset1.valueColors = [UIColor.black]
             dataset1.colors = colors
+            dataset1.valueFormatter = DecimalNumberFormatter(chart: worldDataMap)
             datasets.append(dataset1)
             
         }
@@ -303,6 +318,79 @@ class ViewController: UIViewController, ChartViewDelegate,CLLocationManagerDeleg
         worldDataMap.data = chartData
     }
     
+    fileprivate func updateNearestCountryMap(){
+        guard let data = nearestCountrydData else {
+            print("nearest country Data not yet fetched or available")
+            return
+        }
+        
+        var pieSlots : [PieChartDataEntry] = []
+//        var datasets : [PieChartDataSet] = []
+        var states : [String] = []
+        var legendColors : [UIColor] = []
+     
+        let noOfStates = data.areas.count
+        
+        for pieNo in 0..<noOfStates{
+            
+            let x : CovidWordData = data.areas[pieNo]
+            
+            let pieSlot = PieChartDataEntry(value: Double(x.totalConfirmed!),label: x.displayName)
+        
+            pieSlots.append(pieSlot)
+            states.append(x.displayName)
+        }
+        
+//        print(datasets)
+        
+        let legend = nearCountryDataMap.legend
+        
+        var legendsEntries: [LegendEntry] = []
+        
+        for i in 0..<noOfStates {
+            legendColors.append(generateRandomColor())
+            legendsEntries.append(LegendEntry(label: states[i], form: legend.form, formSize: legend.formSize, formLineWidth: legend.formLineWidth, formLineDashPhase: legend.formLineDashPhase, formLineDashLengths: legend.formLineDashLengths, formColor: legendColors[i]))
+        }
+        
+        legend.setCustom(entries: legendsEntries)
+        
+        let dataset = PieChartDataSet(entries: pieSlots)
+        dataset.setColors(legendColors, alpha: CGFloat(1.0))
+        
+        dataset.valueLinePart1OffsetPercentage = 0.1
+        dataset.valueLinePart1Length = 0.2
+        dataset.valueLinePart2Length = 0.5
+        dataset.valueLineVariableLength = true
+        dataset.useValueColorForLine = true
+        dataset.xValuePosition = .outsideSlice
+        dataset.yValuePosition = .outsideSlice
+        dataset.automaticallyDisableSliceSpacing = true
+        dataset.valueFormatter = DecimalNumberFormatter(chart: nearCountryDataMap)
+        
+        let chartData = PieChartData(dataSet: dataset)
+        chartData.setValueTextColor(.black)
+        
+        nearCountryDataMap.delegate = self
+        
+        nearCountryDataMap.data = chartData
+    }
+    
+//    MARK:- Navigation
+    @IBAction func selfAssesmentClicked(_ sender: Any) {
+        performSegue(withIdentifier: NaVIdentifiers.ASSESMENT.rawValue, sender: self)
+    }
+    
+    @IBAction func InfoClicked(_ sender: Any) {
+        performSegue(withIdentifier: NaVIdentifiers.INFO.rawValue, sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if(segue.identifier == NaVIdentifiers.ASSESMENT.rawValue){
+//            let assesmentTableview = segue.destination as! AssesmentTableViewController
+//            
+//            if
+//        }
+    }
     
     //MARK:-
     
@@ -328,11 +416,12 @@ class ViewController: UIViewController, ChartViewDelegate,CLLocationManagerDeleg
             print("covid data is not available")
             return nil
         }
-        
+    
         for country in countires.areas {
+//            print(country.displayName)
             if let d = distance {
                 let dis = location.distance(from: CLLocation(latitude: country.lat!, longitude: country.long!))
-//                print(" Current: \(d) -----   dis: \(dis) -> country : \(country.displayName)")
+                print(" Current: \(d) -----   dis: \(dis) -> country : \(country.displayName)")
 //                print("--> " + data.displayName.lowercased())
                 if(dis < d &&  country.displayName.lowercased() != currentCountry.lowercased()){
                     data = country
@@ -342,6 +431,7 @@ class ViewController: UIViewController, ChartViewDelegate,CLLocationManagerDeleg
                 }
             }else{
                 distance = location.distance(from: CLLocation(latitude: country.lat!, longitude: country.long!))
+                print(" Current: \(distance!) -----  country : \(country.displayName) , lat: \(country.lat!) and log: \(country.long!)")
                 data = country
             }
         }

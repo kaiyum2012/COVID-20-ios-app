@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		1BF7C15DD48567E69A6D7843 /* Pods_COVID2020.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54E4A5928F0EFF63ACE6E37B /* Pods_COVID2020.framework */; };
+		3F5E5516244CDAC400788417 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5E5515244CDAC400788417 /* InfoViewController.swift */; };
+		3F6991D7244CB52900E594C8 /* SelfAssesmentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6991D6244CB52900E594C8 /* SelfAssesmentData.swift */; };
+		3F6991D9244CBEC300E594C8 /* AssesmentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6991D8244CBEC300E594C8 /* AssesmentTableViewController.swift */; };
+		3F6991DB244CBF9500E594C8 /* AssesmentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6991DA244CBF9500E594C8 /* AssesmentTableViewCell.swift */; };
+		3F6991DD244CC34700E594C8 /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6991DC244CC34700E594C8 /* CheckBox.swift */; };
 		3F7B65EE2447CC73003EC046 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7B65ED2447CC73003EC046 /* AppDelegate.swift */; };
 		3F7B65F02447CC73003EC046 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7B65EF2447CC73003EC046 /* SceneDelegate.swift */; };
 		3F7B65F22447CC73003EC046 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7B65F12447CC73003EC046 /* ViewController.swift */; };
@@ -23,6 +28,11 @@
 /* Begin PBXFileReference section */
 		0FF1B2A9D3D91C086699066B /* Pods-COVID2020.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-COVID2020.release.xcconfig"; path = "Target Support Files/Pods-COVID2020/Pods-COVID2020.release.xcconfig"; sourceTree = "<group>"; };
 		1645D07E73330CEEB378F2EA /* Pods-COVID2020.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-COVID2020.debug.xcconfig"; path = "Target Support Files/Pods-COVID2020/Pods-COVID2020.debug.xcconfig"; sourceTree = "<group>"; };
+		3F5E5515244CDAC400788417 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
+		3F6991D6244CB52900E594C8 /* SelfAssesmentData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfAssesmentData.swift; sourceTree = "<group>"; };
+		3F6991D8244CBEC300E594C8 /* AssesmentTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssesmentTableViewController.swift; sourceTree = "<group>"; };
+		3F6991DA244CBF9500E594C8 /* AssesmentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssesmentTableViewCell.swift; sourceTree = "<group>"; };
+		3F6991DC244CC34700E594C8 /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
 		3F7B65EA2447CC73003EC046 /* COVID2020.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = COVID2020.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F7B65ED2447CC73003EC046 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3F7B65EF2447CC73003EC046 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -80,6 +90,9 @@
 				3F7B65F62447CC76003EC046 /* Assets.xcassets */,
 				3F7B65F82447CC76003EC046 /* LaunchScreen.storyboard */,
 				3F7B65FB2447CC76003EC046 /* Info.plist */,
+				3F6991D8244CBEC300E594C8 /* AssesmentTableViewController.swift */,
+				3F6991DA244CBF9500E594C8 /* AssesmentTableViewCell.swift */,
+				3F5E5515244CDAC400788417 /* InfoViewController.swift */,
 			);
 			path = COVID2020;
 			sourceTree = "<group>";
@@ -88,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				3F7B66022447D1F8003EC046 /* CovidWorldData.swift */,
+				3F6991D6244CB52900E594C8 /* SelfAssesmentData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -98,6 +112,7 @@
 				3F7B66052447EEF1003EC046 /* LocaleHelper.swift */,
 				3FFF196D2448E1FC00A7EB07 /* CountryValueFormater.swift */,
 				3FFF196F2448E64C00A7EB07 /* DecimalNumberFormatter.swift */,
+				3F6991DC244CC34700E594C8 /* CheckBox.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -234,13 +249,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F6991D9244CBEC300E594C8 /* AssesmentTableViewController.swift in Sources */,
 				3F7B65F22447CC73003EC046 /* ViewController.swift in Sources */,
+				3F6991D7244CB52900E594C8 /* SelfAssesmentData.swift in Sources */,
+				3F6991DD244CC34700E594C8 /* CheckBox.swift in Sources */,
 				3F7B65EE2447CC73003EC046 /* AppDelegate.swift in Sources */,
 				3F7B66032447D1F8003EC046 /* CovidWorldData.swift in Sources */,
 				3F7B65F02447CC73003EC046 /* SceneDelegate.swift in Sources */,
 				3FFF196E2448E1FC00A7EB07 /* CountryValueFormater.swift in Sources */,
 				3FFF19702448E64C00A7EB07 /* DecimalNumberFormatter.swift in Sources */,
 				3F7B66062447EEF1003EC046 /* LocaleHelper.swift in Sources */,
+				3F5E5516244CDAC400788417 /* InfoViewController.swift in Sources */,
+				3F6991DB244CBF9500E594C8 /* AssesmentTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
