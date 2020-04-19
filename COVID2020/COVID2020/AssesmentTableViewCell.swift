@@ -20,42 +20,5 @@ class AssesmentTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
-    
-    public func setOptions(options data : SelfAssesment){
-      
-        for option in data.options {
-            
-//            let opt = Checkbox()
-            let opt = UILabel(frame: CGRect())
-
-            optionsStack.addSubview(opt)
-
-            opt.translatesAutoresizingMaskIntoConstraints = false
-
-            opt.leadingAnchor.constraint(equalTo: self.optionsStack.leadingAnchor).isActive=true
-            opt.trailingAnchor.constraint(equalTo: self.optionsStack.trailingAnchor).isActive = true
-
-            opt.leadingAnchor.constraint(lessThanOrEqualTo: self.optionsStack.leadingAnchor).isActive = true
-            opt.trailingAnchor.constraint(lessThanOrEqualTo: self.optionsStack.trailingAnchor).isActive = true
-
-            opt.lineBreakMode = .byWordWrapping
-            
-            
-//            opt.autoresizesSubviews = true
-//            opt.titleLabel!.text = option
-            opt.text = option
-            
-//            opt.imageView?.leadingAnchor.constraint(equalTo: self.optionsStack.leadingAnchor).isActive = true
-//
-//            opt.isSelected = false
-//
-      
-            
-        }
-//
-    }
-
 }

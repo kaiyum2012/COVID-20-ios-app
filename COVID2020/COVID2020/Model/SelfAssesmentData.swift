@@ -8,6 +8,7 @@
 
 import Foundation
 
+//Reference: https://www.811healthline.ca/covid-19-self-assessment/are-you-experiencing-any-of-the-following/
 
 public enum OptionType {
     case MULTIPLE

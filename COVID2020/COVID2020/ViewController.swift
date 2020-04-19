@@ -57,21 +57,6 @@ class ViewController: UIViewController, ChartViewDelegate,CLLocationManagerDeleg
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
-////       Reference:: https://medium.com/swiftcraft/how-to-perform-an-action-after-two-asynchronous-functions-finish-1d796faf5daf
-//        let asyncTaskGroup =  DispatchGroup()
-//        asyncTaskGroup.enter()
-//
-//        fetchWorldData()
-//        StartGettingLocation()
-//
-//        asyncTaskGroup.leave()
-//
-//        asyncTaskGroup.notify(queue: .main) {
-//            self.updateGlanceViewLabels()
-//            self.UpdateWorldChart()
-//            print(self.getNearestCountryData()!)
-//        }
         
         DispatchQueue.main.async {
             self.fetchWorldData()
@@ -325,7 +310,7 @@ class ViewController: UIViewController, ChartViewDelegate,CLLocationManagerDeleg
         }
         
         var pieSlots : [PieChartDataEntry] = []
-//        var datasets : [PieChartDataSet] = []
+        
         var states : [String] = []
         var legendColors : [UIColor] = []
      
@@ -340,8 +325,6 @@ class ViewController: UIViewController, ChartViewDelegate,CLLocationManagerDeleg
             pieSlots.append(pieSlot)
             states.append(x.displayName)
         }
-        
-//        print(datasets)
         
         let legend = nearCountryDataMap.legend
         
@@ -383,16 +366,8 @@ class ViewController: UIViewController, ChartViewDelegate,CLLocationManagerDeleg
     @IBAction func InfoClicked(_ sender: Any) {
         performSegue(withIdentifier: NaVIdentifiers.INFO.rawValue, sender: self)
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if(segue.identifier == NaVIdentifiers.ASSESMENT.rawValue){
-//            let assesmentTableview = segue.destination as! AssesmentTableViewController
-//            
-//            if
-//        }
-    }
-    
-    //MARK:-
+        
+    //MARK:- Datastore functions
     
     func getTopFiveCountryData() -> [CovidWordData]?{
         var topFiveCountries : [CovidWordData] = []
@@ -446,7 +421,5 @@ class ViewController: UIViewController, ChartViewDelegate,CLLocationManagerDeleg
     private func getApiURL(endpoint : EndPoints) -> String {
         return "\(apiBaseURL)\(endpoint.rawValue)?\(extraParam)"
     }
-
-    
 }
 
