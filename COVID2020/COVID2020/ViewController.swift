@@ -30,7 +30,9 @@ class ViewController: UIViewController, ChartViewDelegate,CLLocationManagerDeleg
     
     var covidWordData : CovidWordData!
     var sortedCovidWordDataByCountries : [CovidWordData]!
+    var currentCountryData : CovidWordData!
     var nearestCountrydData : CovidWordData!
+    var isSafeAreaCompareNear : Bool = true
     
     let locationManager = CLLocationManager()
     var currentLocation : CLLocation!
@@ -71,17 +73,6 @@ class ViewController: UIViewController, ChartViewDelegate,CLLocationManagerDeleg
         assesmentBtn.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
         assesmentBtn.layer.shadowOpacity = 1.0
         
-        
-        quickGlanceStack.backgroundColor = .gray
-        quickGlanceStack.layer.cornerRadius = 15
-        quickGlanceStack.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5).cgColor
-        quickGlanceStack.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
-        quickGlanceStack.layer.shadowOpacity = 1.0
-        
-        percStack.layer.cornerRadius = 15
-        percStack.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5).cgColor
-        percStack.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
-        percStack.layer.shadowOpacity = 1.0
     }
     
     override func viewDidLoad() {
@@ -131,17 +122,53 @@ class ViewController: UIViewController, ChartViewDelegate,CLLocationManagerDeleg
                     if let country = placemark.country{
                         self.currentCountry = country
                         print("Current Country --> \(country)")
+                        self.setContaminateIndicator()
+                        
                     }
                     
                     if let city = placemark.locality {
                         self.currentCity = city
                         print("Current City --> \(city)")
-                        self.SetCurrentCityLabel(city)
+                        if let country = self.currentCountry{
+                            self.SetCurrentCityLabel("\(city), \(country) ")
+                        }else{
+                            self.SetCurrentCityLabel("\(city)")
+                        }
+                        
                     }
                 }
             }
         }
     }
+    
+    fileprivate func setContaminateIndicator() {
+        guard let nearCountry = nearestCountrydData else {
+            print("near country data not available" )
+            return
+        }
+        
+        guard let currentCountry = currentCountryData else {
+             print("current country data not available" )
+            return
+            
+        }
+        
+        if let current = currentCountry.totalConfirmed, let near = nearCountry.totalConfirmed{
+            if current > near{
+                print("'\(currentCountry.displayName)' is  Unsafe country compare to '\(nearCountry.displayName)'")
+                isSafeAreaCompareNear = false
+                currentCityView.backgroundColor = .systemRed
+            }
+            else{
+                print("'\(currentCountry.displayName)' is safe country compare to '\(nearCountry.displayName)'")
+                isSafeAreaCompareNear = true
+                currentCityView.backgroundColor = .systemGreen
+            }
+            
+        }
+        
+    }
+    
 //    TODO:: WHAT IF PERMISSION DENIED?
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let l =  locations.last {
@@ -394,6 +421,8 @@ class ViewController: UIViewController, ChartViewDelegate,CLLocationManagerDeleg
 //        chartData.setValueFormatter(formatter)
         
         nearCountryDataMap.data = chartData
+        
+        setContaminateIndicator()
     }
     
 //    MARK:- Navigation
@@ -415,6 +444,37 @@ class ViewController: UIViewController, ChartViewDelegate,CLLocationManagerDeleg
         }
         return topFiveCountries
     }
+    
+    func getNearestStatedata(reference country : CovidWordData) -> CovidWordData? {
+            var data : CovidWordData!
+            var distance : Double?
+                
+                guard let location = currentLocation  else {
+                    print("Location not detected")
+                    return nil
+                }
+            
+                for state in country.areas {
+        //            print(country.displayName)
+                    if let d = distance {
+                        let dis = location.distance(from: CLLocation(latitude: country.lat!, longitude: country.long!))
+                        print(" Current: \(d) -----   dis: \(dis) -> state : \(country.displayName)")
+        //                print("--> " + data.displayName.lowercased())
+                        if(dis < d){
+                           data = state
+                            distance = dis
+        //                    print("dis: \(dis) -> country : \(country.displayName) and current smallest distance \(d) " )
+        //                    print("from data   " + data.displayName)
+                        }
+                    }else{
+                        distance = location.distance(from: CLLocation(latitude: country.lat!, longitude: country.long!))
+                        print(" Current: \(distance!) -----  state : \(country.displayName) , lat: \(country.lat!) and log: \(country.long!)")
+                        data = state
+                    }
+                }
+        return data
+    }
+    
     
     func getNearestCountryData() -> CovidWordData?{
         var data : CovidWordData!
@@ -441,6 +501,8 @@ class ViewController: UIViewController, ChartViewDelegate,CLLocationManagerDeleg
                     distance = dis
 //                    print("dis: \(dis) -> country : \(country.displayName) and current smallest distance \(d) " )
 //                    print("from data   " + data.displayName)
+                }else if country.displayName.lowercased() == currentCountry.lowercased() {
+                    currentCountryData = country
                 }
             }else{
                 distance = location.distance(from: CLLocation(latitude: country.lat!, longitude: country.long!))

@@ -85,6 +85,5 @@ class AssesmentTableViewController: UITableViewController {
             resultLabel.backgroundColor = .systemGreen
             resultLabel.textColor = .white
         }
- 
     }
 }
