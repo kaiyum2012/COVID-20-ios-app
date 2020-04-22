@@ -39,10 +39,12 @@ class ViewController: UIViewController, ChartViewDelegate,CLLocationManagerDeleg
     var currentCountry : String!
     
     
+    @IBOutlet weak var quickGlanceStack: UIStackView!
     @IBOutlet weak var totalCases: UILabel!
     @IBOutlet weak var totalRecovered: UILabel!
     @IBOutlet weak var totalDeaths: UILabel!
     
+    @IBOutlet weak var percStack: UIStackView!
     @IBOutlet weak var deathRate: UILabel!
     @IBOutlet weak var recoveryRate: UILabel!
     
@@ -55,8 +57,37 @@ class ViewController: UIViewController, ChartViewDelegate,CLLocationManagerDeleg
     
     @IBOutlet weak var nearCountryDataMap: PieChartView!
     
+    @IBOutlet weak var InfectionBtn: UIButton!
+    @IBOutlet weak var assesmentBtn: UIButton!
+    
+    fileprivate func setupUI() {
+        InfectionBtn.layer.cornerRadius = 15
+        InfectionBtn.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5).cgColor
+        InfectionBtn.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
+        InfectionBtn.layer.shadowOpacity = 1.0
+
+        assesmentBtn.layer.cornerRadius = 15
+        assesmentBtn.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5).cgColor
+        assesmentBtn.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
+        assesmentBtn.layer.shadowOpacity = 1.0
+        
+        
+        quickGlanceStack.backgroundColor = .gray
+        quickGlanceStack.layer.cornerRadius = 15
+        quickGlanceStack.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5).cgColor
+        quickGlanceStack.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
+        quickGlanceStack.layer.shadowOpacity = 1.0
+        
+        percStack.layer.cornerRadius = 15
+        percStack.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5).cgColor
+        percStack.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
+        percStack.layer.shadowOpacity = 1.0
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupUI()
         
         DispatchQueue.main.async {
             self.fetchWorldData()
@@ -315,6 +346,7 @@ class ViewController: UIViewController, ChartViewDelegate,CLLocationManagerDeleg
         var legendColors : [UIColor] = []
      
         let noOfStates = data.areas.count
+        var total : Double = 0
         
         for pieNo in 0..<noOfStates{
             
@@ -322,6 +354,8 @@ class ViewController: UIViewController, ChartViewDelegate,CLLocationManagerDeleg
             
             let pieSlot = PieChartDataEntry(value: Double(x.totalConfirmed!),label: x.displayName)
         
+            total += Double(x.totalConfirmed!)
+            
             pieSlots.append(pieSlot)
             states.append(x.displayName)
         }
@@ -352,8 +386,12 @@ class ViewController: UIViewController, ChartViewDelegate,CLLocationManagerDeleg
         
         let chartData = PieChartData(dataSet: dataset)
         chartData.setValueTextColor(.black)
-        
         nearCountryDataMap.delegate = self
+        
+//        TODO :: Hide Small slices to make clutter free Map 
+//        UserDefaults.standard.set(total, forKey: "total")
+//        let formatter  = PieChartFormatter(key: "total",minValue: 10)
+//        chartData.setValueFormatter(formatter)
         
         nearCountryDataMap.data = chartData
     }

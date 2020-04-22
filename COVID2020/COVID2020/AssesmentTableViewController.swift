@@ -10,8 +10,15 @@ import UIKit
 
 class AssesmentTableViewController: UITableViewController {
 
+    var optionCount = 0;
+    
+    @IBOutlet weak var resultLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        for question in assesments {
+            optionCount += question.options.count
+        }
     }
 
     // MARK: - Table view data source
@@ -33,7 +40,8 @@ class AssesmentTableViewController: UITableViewController {
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 10
         
-        label.backgroundColor = .systemIndigo
+        label.backgroundColor = .label
+        label.textColor = .white
         
         return label
     }
@@ -46,13 +54,37 @@ class AssesmentTableViewController: UITableViewController {
         let opt = optionsStack.viewWithTag(100) as! UILabel
         
         optionsStack.addSubview(opt)
-
-        opt.leadingAnchor.constraint(equalTo: optionsStack.leadingAnchor).isActive=true
-        opt.trailingAnchor.constraint(equalTo: optionsStack.trailingAnchor).isActive = true
+        
         opt.lineBreakMode = .byWordWrapping
 
         opt.text = assesments[indexPath.section].options[indexPath.row]
         
+        cell.selectionStyle = .none
         return cell
+    }
+    
+    
+    @IBAction func answerClicked(_ sender: UISwitch) {
+        
+        if sender.isOn{
+            optionCount -= 1
+            
+        }else {
+            optionCount += 1
+        }
+        print(optionCount)
+        
+        if optionCount == 1
+        {
+            resultLabel.text = "You should visit nearest Hospital"
+            resultLabel.backgroundColor = .systemRed
+            resultLabel.textColor = .white
+        }
+        else {
+            resultLabel.text = "No need to worry, Stay home"
+            resultLabel.backgroundColor = .systemGreen
+            resultLabel.textColor = .white
+        }
+ 
     }
 }

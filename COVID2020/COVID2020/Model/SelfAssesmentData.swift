@@ -44,7 +44,5 @@ let assesments : [SelfAssesment] = [
         "provided care for the individual, including healthcare workers, family members or other caregivers, or who had other similar close physical contact without consistent and appropriate use of personal protective equipment OR",
         "who lived with or otherwise had close prolonged contact (within 2 meters) with the person while they were infectious OR",
         "had direct contact with infectious bodily fluids of the person (e.g. was coughed or sneezed on) while not wearing recommended personal protective equipment"
-    ],type : OptionType.MULTIPLE),
-    SelfAssesment(queNO: 4, question: "Travel includes passing through an airport.", options: ["yes","No"],type : OptionType.TRUE_OR_FALSE),
-    
+    ],type : OptionType.MULTIPLE)
 ]
