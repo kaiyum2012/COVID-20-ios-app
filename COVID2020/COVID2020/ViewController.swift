@@ -12,6 +12,9 @@ import Charts
 
 class ViewController: UIViewController, ChartViewDelegate,CLLocationManagerDelegate{
 
+    var isOffline = true
+    let JSON_DATA_FILE : String = "covid_data"
+    
     var apiBaseURL = "https://www.bing.com/covid/"
     var extraParam = ""
 
@@ -141,6 +144,20 @@ class ViewController: UIViewController, ChartViewDelegate,CLLocationManagerDeleg
         }
     }
     
+    func getDataFromJSON(filename fileName: String) -> Data? {
+        if let url = Bundle.main.url(forResource: fileName, withExtension: "json") {
+            do {
+                let data = try Data(contentsOf: url)
+                return data
+            } catch {
+                print("I can not read your file \(fileName).json")
+                print(error)
+            }
+        }
+        print("I can not read the file \(fileName).json")
+        return nil
+    }
+    
     fileprivate func setContaminateIndicator() {
         guard let nearCountry = nearestCountrydData else {
             print("near country data not available" )
@@ -154,7 +171,7 @@ class ViewController: UIViewController, ChartViewDelegate,CLLocationManagerDeleg
         }
         
         if let current = currentCountry.totalConfirmed, let near = nearCountry.totalConfirmed{
-            if current > near{
+            if current < near{
                 print("'\(currentCountry.displayName)' is  Unsafe country compare to '\(nearCountry.displayName)'")
                 isSafeAreaCompareNear = false
                 currentCityView.backgroundColor = .systemRed
@@ -180,32 +197,52 @@ class ViewController: UIViewController, ChartViewDelegate,CLLocationManagerDeleg
     }
     //MARK:- API CALL
     func fetchWorldData() {
-        let urlSession = URLSession(configuration: .default)
-
-        if let url = getWorldDataURL(){
-    
-            let dataTask = urlSession.dataTask(with: url) { (data, response, error) in
-                
-                if let e = error{
-                    print(e.localizedDescription.description)
-                }
-                
-                if let data = data {
-                    do{
-                        let readableData = try JSONDecoder().decode(CovidWordData.self, from: data)
-                        self.covidWordData = readableData
-                        DispatchQueue.main.async{
+        if isOffline == true{
+            guard let data = getDataFromJSON(filename: JSON_DATA_FILE) else{
+                print("Unble to read file data")
+                return;
+            }
+            
+            do{
+                let readableData = try JSONDecoder().decode(CovidWordData.self, from: data)
+                self.covidWordData = readableData
+                DispatchQueue.main.async{
 //                        Sort data in desc
-                            self.sortedCovidWordDataByCountries = self.covidWordData.areas.sorted()
-                            self.updateGlanceViewLabels()
-                            self.updateWorldChart()
-                            }
-                    }catch{
-                        print("Not able to decode world data: \(error)")
+                    self.sortedCovidWordDataByCountries = self.covidWordData.areas.sorted()
+                    self.updateGlanceViewLabels()
+                    self.updateWorldChart()
                     }
-                  }
-                }
-            dataTask.resume()
+            }catch{
+                print("Not able to decode world data: \(error)")
+            }
+        }else {
+            let urlSession = URLSession(configuration: .default)
+
+            if let url = getWorldDataURL(){
+        
+                let dataTask = urlSession.dataTask(with: url) { (data, response, error) in
+                    
+                    if let e = error{
+                        print(e.localizedDescription.description)
+                    }
+                    
+                    if let data = data {
+                        do{
+                            let readableData = try JSONDecoder().decode(CovidWordData.self, from: data)
+                            self.covidWordData = readableData
+                            DispatchQueue.main.async{
+    //                        Sort data in desc
+                                self.sortedCovidWordDataByCountries = self.covidWordData.areas.sorted()
+                                self.updateGlanceViewLabels()
+                                self.updateWorldChart()
+                                }
+                        }catch{
+                            print("Not able to decode world data: \(error)")
+                        }
+                      }
+                    }
+                dataTask.resume()
+            }
         }
     }
 
@@ -490,6 +527,12 @@ class ViewController: UIViewController, ChartViewDelegate,CLLocationManagerDeleg
             return nil
         }
     
+        guard let currentCountry = currentCountry else {
+            print("Current Country not yet detected")
+            return nil
+            
+        }
+        
         for country in countires.areas {
 //            print(country.displayName)
             if let d = distance {

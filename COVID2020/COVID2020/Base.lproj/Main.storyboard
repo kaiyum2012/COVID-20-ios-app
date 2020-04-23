@@ -10,7 +10,7 @@
         <!--View Controller-->
         <scene sceneID="VFk-QN-rbj">
             <objects>
-                <viewController id="6tE-VT-ImG" customClass="ViewController" customModule="COVID2020" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="6tE-VT-ImG" customClass="ViewController" customModule="COVID19" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7qe-6x-5Ha">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="1095"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -363,7 +363,7 @@
         <!--Assesment Table View Controller-->
         <scene sceneID="mHB-K6-Hx0">
             <objects>
-                <tableViewController id="nDA-hB-Qus" customClass="AssesmentTableViewController" customModule="COVID2020" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="nDA-hB-Qus" customClass="AssesmentTableViewController" customModule="COVID19" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="172-UV-B2n">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -383,7 +383,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="229" id="grD-B8-X4t" customClass="AssesmentTableViewCell" customModule="COVID2020" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="229" id="grD-B8-X4t" customClass="AssesmentTableViewCell" customModule="COVID19" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="72" width="414" height="229"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="grD-B8-X4t" id="3bc-5c-eDW">
@@ -399,11 +399,8 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" selected="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="w1j-ym-o50">
+                                                <switch opaque="NO" tag="101" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" selected="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="w1j-ym-o50">
                                                     <rect key="frame" x="0.0" y="0.0" width="384" height="197"/>
-                                                    <connections>
-                                                        <action selector="answerClicked:" destination="nDA-hB-Qus" eventType="valueChanged" id="Qey-rE-jdv"/>
-                                                    </connections>
                                                 </switch>
                                             </subviews>
                                         </stackView>
@@ -437,7 +434,7 @@
         <!--Info View Controller-->
         <scene sceneID="roV-od-1v9">
             <objects>
-                <viewController id="AR9-1p-CBy" customClass="InfoViewController" customModule="COVID2020" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="AR9-1p-CBy" customClass="InfoViewController" customModule="COVID19" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="D8Y-Ke-wry">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

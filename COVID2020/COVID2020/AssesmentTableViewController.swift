@@ -56,13 +56,43 @@ class AssesmentTableViewController: UITableViewController {
         optionsStack.addSubview(opt)
         
         opt.lineBreakMode = .byWordWrapping
-
         opt.text = assesments[indexPath.section].options[indexPath.row]
         
         cell.selectionStyle = .none
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        if let cell = cell {
+            if let option = cell.viewWithTag(101) as? UISwitch{
+                print(option.isOn)
+                if option.isOn{
+                    optionCount += 1
+                    option.setOn(false, animated: true);
+                    
+                }else{
+                    optionCount -= 1
+                    option.setOn(true, animated: true)
+                }
+                
+                
+               
+                print(optionCount)
+                if optionCount < 6
+                {
+                    resultLabel.text = "You should visit nearest Hospital"
+                    resultLabel.backgroundColor = .systemRed
+                    resultLabel.textColor = .white
+                }
+                else {
+                    resultLabel.text = "No need to worry, Stay home"
+                    resultLabel.backgroundColor = .systemGreen
+                    resultLabel.textColor = .white
+                }
+            }
+        }        
+    }
     
     @IBAction func answerClicked(_ sender: UISwitch) {
         
@@ -74,7 +104,7 @@ class AssesmentTableViewController: UITableViewController {
         }
         print(optionCount)
         
-        if optionCount == 1
+        if optionCount == 3
         {
             resultLabel.text = "You should visit nearest Hospital"
             resultLabel.backgroundColor = .systemRed
