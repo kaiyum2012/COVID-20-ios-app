@@ -171,7 +171,7 @@ class ViewController: UIViewController, ChartViewDelegate,CLLocationManagerDeleg
         }
         
         if let current = currentCountry.totalConfirmed, let near = nearCountry.totalConfirmed{
-            if current < near{
+            if current > near{
                 print("'\(currentCountry.displayName)' is  Unsafe country compare to '\(nearCountry.displayName)'")
                 isSafeAreaCompareNear = false
                 currentCityView.backgroundColor = .systemRed
